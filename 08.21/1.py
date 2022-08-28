@@ -15,7 +15,7 @@ class Tetra:
             raise TypeError('other object isn`t Tetra')
 
 
-    # ДОДЕЛАТЬ:
+    # ДОДЕЛАТЬ,:
     def surface(self, edge):
         pass
 
