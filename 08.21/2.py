@@ -52,6 +52,7 @@ class DateTime:
         print('Время в чужом часовом поясе: ')
         print(int(time_zone2.__dict__['time_zone']) + int(hour))
 
+
 # экземпляры класса DateTime
 time_zone1 = DateTime(input('Введите Ваш часовой пояс России в UTC(от 2 до 12): '))
 time_zone2 = DateTime(input('Введите чужой часовой пояс России В UTC(от 2 до 12): '))

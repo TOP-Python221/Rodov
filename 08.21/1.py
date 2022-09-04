@@ -25,7 +25,7 @@ class Tetra:
 
     def __lt__(self, other):
         if isinstance(other, Tetra):
-            if tetra1.volume() < tetra2.volume():
+            if self.volume() < other.volume():
                 return True
             else:
                 return False
@@ -49,7 +49,6 @@ print(f'Объём второго тетраэдра: {tetra2.volume()}')
 #     ef __init__(self, edge: int = 10 ) -> float:
 #         self.edge = edge
 #
-#
 #     def volume(self, tetra1, tetra2):
 #         self.tetra1 = tetra1
 #         self.tetra2 = tetra2
@@ -57,15 +56,13 @@ print(f'Объём второго тетраэдра: {tetra2.volume()}')
 #         self.Vtetra2 = str(round((self.tetra2 ** 3 / 12) * 1.41, 2))
 #         return volume
 #
+#
 # = str(round((tetra1 ** 3 / 12) * 1.41, 2))
 # tetra1 = Tetra(12)
 # tetra2 = Tetra(15)
 #
 # tetra2 = 12
 # etra1 = 15
-#
-#
-#
 #
 # print(tetra1.volume())
 # volume1 = round((tetra1 ** 3 / 12) * 1.41, 2)
