@@ -1,10 +1,12 @@
-
 class Tetra:
-    def __init__(self, x: int, y: int, edge: int = 10,):
+    def __init__(self, x: int, y: int, edge: int = 10):
         self.edge = edge
+        # КОММЕНТАРИЙ: тетраэдр — объёмная фигура, задавать его точкой на плоскости как-то.. мм.. и, кстати, если уж на то пошло, вершин у тетраэдра четыре — но здесь надо аккуратно: вам надо тогда, чтобы расстояние между вершинами было равно длине ребра — вопрос по сути сводится к тому, что через что вы задаёте — вершины из которых вычисляется ребро, или точку и ребро из которых вычисляются остальные вершины
         self.x = x
         self.y = y
 
+    # КОММЕНТАРИЙ: для класса точки мы операцию вычитания переопределили как вычисление расстояния между точками — и это не самый очевидный ход, но допустимый
+    # ОТВЕТИТЬ: а вот как вычитание объектов тетраэдров сводится к тому же действию?
     def __sub__(self, other) -> float:
         if isinstance(other, Tetra):
             first_point = other.x - self.x
@@ -13,16 +15,19 @@ class Tetra:
         else:
             raise TypeError('other object isn`t Tetra')
 
+    # КОММЕНТАРИЙ: метки в верхнем регистре — моя прерогатива )) если сильно надо, то используйте тогда, пожалуйста, хотя бы базовые todo и fixme
     # ДОДЕЛАТЬ,:
+    # УДАЛИТЬ: параметр edge здесь не нужен — он уже есть в self в качестве атрибута
     def surface(self, edge):
+        # ДОБАВИТЬ: тело метода
         pass
 
+    # ИСПРАВИТЬ: в аннотации float, а возвращаете str — надо выбрать одно
     def volume(self) -> float:
         """Рассчитывает объём тетраэдра."""
-        return str(round((self.edge ** 3 / 12) ** 0.5, 2))
+        return str(round((self.edge**3 / 12)**0.5, 2))
 
-    # def ....
-
+    # КОММЕНТАРИЙ: а вот добавление сравнения — это очень хорошо!
     def __lt__(self, other):
         if isinstance(other, Tetra):
             if self.volume() < other.volume():
@@ -30,7 +35,9 @@ class Tetra:
             else:
                 return False
         else:
+            # КОММЕНТАРИЙ: не стоит предлагать смотреть на код, лучше напишите документацию к классу =Ъ
             raise TypeError('other object isn`t Tetra. Look at the code a little bit better and try again :p')
+
 
 # экземпляры класса Tetra
 tetra1 = Tetra(3, 4, 12)
@@ -40,30 +47,4 @@ print(f'Объём первого тетраэдра: {tetra1.volume()}')
 print(f'Объём второго тетраэдра: {tetra2.volume()}')
 
 
-# ---------------- Черновые варианты: ----------------
-
-# print(f'Объём первого тетраэдра { = }')
-# print(f'Объём второго тетраэдр {= }')
-#
-# class Tetra:
-#     ef __init__(self, edge: int = 10 ) -> float:
-#         self.edge = edge
-#
-#     def volume(self, tetra1, tetra2):
-#         self.tetra1 = tetra1
-#         self.tetra2 = tetra2
-#         self.Vtetra1 = str(round((self.tetra1 ** 3 / 12) * 1.41, 2))
-#         self.Vtetra2 = str(round((self.tetra2 ** 3 / 12) * 1.41, 2))
-#         return volume
-#
-#
-# = str(round((tetra1 ** 3 / 12) * 1.41, 2))
-# tetra1 = Tetra(12)
-# tetra2 = Tetra(15)
-#
-# tetra2 = 12
-# etra1 = 15
-#
-# print(tetra1.volume())
-# volume1 = round((tetra1 ** 3 / 12) * 1.41, 2)
-# volume2 = round((tetra2 ** 3 / 12) * 1.41, 2)
+# ИТОГ: хорошо! — 4/5
