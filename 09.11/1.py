@@ -12,11 +12,14 @@ class Degree(Enum):
     MASTER = 'm'
     DOCTOR = 'd'
 
+# ДОБАВИТЬ: перечислитель EducationForm
+
 
 class Person:
     def __init__(self, name: str,
                  birthdate: str,
                  sex: Sex):
+        # ОТВЕТИТЬ: вот это правильно! а вы понимаете, как этот атрибут будет использоваться (имея в виду и свойство)?
         self.__name = name
         self.birthdate = birthdate
         self.sex = sex
@@ -24,6 +27,8 @@ class Person:
     @property
     def name(self):
         return self.__name
+
+    # ДОБАВИТЬ: метод __str__()
 
 
 class Employee(Person):
@@ -34,16 +39,24 @@ class Employee(Person):
                  position: str,
                  salary: int):
         super().__init__(name, birthdate, sex)
+        # ДОБАВИТЬ: атрибут employment_date
         self.position = position
         self.salary = salary
+
+    # ДОБАВИТЬ: свойство annual_income
 
     def index_salary(self, CPI: float = 99.38) -> float:
         """Рассчитывает повышение оклада (Индексация Заработной Платы)"""
         # Индекс Потребительских Цен по Нижегородской области на август 2022
+        # УДАЛИТЬ: хранить такой общий коэффициент в экземпляре сотрудника мне представляется не лучшей идеей — не довольно ли того, что вы его передаёте параметром? этот индекс ведь меняется от месяца к месяцу, если я правильно понимаю
         self.CPI = 99.38
         salary = self.salary
+        # КОММЕНТАРИЙ: индексация на убывание? хорошо, что вы не в администрации работаете xD
         salary_increase = salary * CPI / 100
+        # ДОБАВИТЬ: мне представляется, что возвращаемое значение этого метода будет перезаписывать атрибут зарплаты для сотрудников, а он у нас принимает int объекты — может стоит преобразовать?
         return salary_increase
+
+    # ДОБАВИТЬ: метод __str__()
 
 
 class GeneralPersonnel(Employee):
@@ -52,6 +65,9 @@ class GeneralPersonnel(Employee):
 
 class SecurityPersonnel(Employee):
     def __str__(self):
+        # ИСПРАВИТЬ: у вас эта строка частично дублируется во многих классах — этого надо стараться избегать
+        # ИСПОЛЬЗОВАТЬ: пропишите доступную часть строки в методе __str__() базового класса Person, а затем в соответствующих методах подклассов вызывайте метод родительского класса — он вернёт строку, как и должен, а вы к этой строке добавите ещё одну часть:
+        # return super().__str__() + f'заработная плата: {self.salary}'
         return f'Имя сотрудника: {self.name}; ' \
                f'дата рождения: {self.birthdate}; ' \
                f'пол: {self.sex}; ' \
@@ -61,17 +77,21 @@ class SecurityPersonnel(Employee):
 
 class Administrator(Employee):
     def __init__(self,
+                 # ДОБАВИТЬ: аннотации
                  name,
                  birthdate,
                  sex,
                  position,
                  salary,
+                 # ИСПОЛЬЗОВАТЬ: когда нужно аннотировать объявляемый класс, то можно взять имя класса в кавычки, чтобы избежать ошибок
                  supervisor: 'Administrator',
                  subordinates: list[Employee]):
         super().__init__(name, birthdate, sex, position, salary)
         self.supervisor = supervisor
+        # ИСПОЛЬЗОВАТЬ: значение по умолчанию для атрибута subordinates
         self.subordinates = subordinates
 
+    # ИСПРАВИТЬ: дублирование кода
     def __str__(self):
         return f'Имя администратора: {self.name}; ' \
                f'дата рождения: {self.birthdate}; ' \
@@ -82,6 +102,7 @@ class Administrator(Employee):
 
 
 class ProfessionalEmployee(Employee):
+    # ДОБАВИТЬ: аннотации и значение по умолчанию для параметра degree
     def __init__(self,
                  name,
                  birthdate,
@@ -95,9 +116,12 @@ class ProfessionalEmployee(Employee):
         self.experience = experience
 
     def years_of_experience(self) -> int:
+        # ИСПРАВИТЬ: предполагалось, что этот метод будет рассчитывать общий стаж сотрудника: тот, с которым он принят на работу (записан в атрибуте experience), плюс стаж в университете (с даты приёма по текущую дату)
         year_of_work = int(input('Введите текущий стаж работы сотрудника в организации: '))
         total_experience = self.experience + year_of_work
         return total_experience
+
+    # ДОБАВИТЬ: метод __str__()
 
 
 class Teacher(Employee):
@@ -118,6 +142,7 @@ class Teacher(Employee):
 
         self._courses = list(courses)
 
+    # ИСПРАВИТЬ: а я бы сделал здесь только один геттер через свойство — также как с name в Person вы сделали
     def get_courses(self) -> list:
         """Возвращает приватный атрибут класса Teacher (getter)."""
         return self._courses
@@ -126,13 +151,19 @@ class Teacher(Employee):
         """Получает приватный атрибут класса Teacher (setter)."""
         self._courses = courses
 
+    # ИСПРАВИТЬ: лучше здесь по-одному курсу добавлять
     def add_course(self, course: list):
         """Добавляет наименования курсов, которые может вести преподаватель."""
         self._courses.append(course)
 
+    # ИСПРАВИТЬ: лучше здесь по-одному курсу добавлять
     def rem_course(self, course: list):
         """Удаляет наименования ранее созданных либо уже имеющихся курсов."""
+        # ОТВЕТИТЬ: в чём разница между "ранее созданными" и "уже имеющимися"?
+
         self._courses.remove(course)
+
+    # ДОБАВИТЬ: метод __str__()
 
 
 class Researcher(Employee):
@@ -146,6 +177,7 @@ class Researcher(Employee):
         super().__init__(name, birthdate, sex, position, salary)
         self.degree = degree
 
+    # ИСПРАВИТЬ: дублирование кода
     def __str__(self):
         return f'Имя сотрудника: {self.name}; ' \
                f'дата рождения: {self.birthdate}; ' \
@@ -157,16 +189,21 @@ class Researcher(Employee):
 
 class Student(Person):
     def __init__(self,
+                 # ДОБАВИТЬ: аннотации типов
                  name,
                  birthdate,
                  sex,
                  year: int = 1,
                  average_grade: float = -1):
         super().__init__(name, birthdate, sex)
+        # ДОБАВИТЬ: атрибут form
         self.year = year
         self.average_grade = average_grade
 
+    # КОММЕНТАРИЙ: вот, собственно, поэтому я и говорил о необходимости добавить в модель дисциплины, которые можно связать со студентами и каждому студенту по каждой дисциплине выставлять баллы — а не вручную вводить название предмета и уж точно не обращаться к объектам в глобальном пространстве имён — я их сейчас перенёс из этого модуля (как это и должно было быть) и весь код этих двух методов превратился в тыкву; попытку, впрочем, засчитываю =)
+    #  вспомните принцип инверсии зависимостей: код верхнего уровня и код нижнего уровня не должны зависеть друг от друга
     def average_grade(self) -> int:
+        # УДАЛИТЬ: код метода — оставьте пока заглушку, после доработки модели допишем
         """Подсчитывает средний балл за введённую пользователем дисциплину и выводит соответствующие сообщения."""
         subject = input('Введите наименование предмета: ')
         # Проверка на наличие студента (его фамилии) в списке группы.
@@ -181,6 +218,7 @@ class Student(Person):
         return round(sum(group221[self.name][subject]) / len(group221[self.name][subject]), 2)
 
     def year_increment(self, year: int = 0, average_grade: int = 0) -> str:
+        # УДАЛИТЬ: код метода — оставьте пока заглушку, после доработки модели допишем
         """Выводит пользователю сообщение о студенте: переведён, остается на текущем курсе на второй год или закончил обучение."""
         self.year = year
         self.average_grade = average_grade
@@ -192,3 +230,9 @@ class Student(Person):
             return 'Студент переведён на следующий курс.'
         else:
             return 'Студент остаётся на второй год на текущем курсе.'
+
+
+# ДОБАВИТЬ: классы OrganizationLevel, University, Institute, Department, Group
+
+
+# ИТОГ: на самом деле довольно хорошо, но требует доработки — 7/10
