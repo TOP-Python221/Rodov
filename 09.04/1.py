@@ -1,5 +1,7 @@
 from random import randrange as rr
 
+# ДОБАВИТЬ: а где исключения?
+
 class MatrixOne(int):
     def __init__(self, some_arg: int):
         self.some_arg = some_arg
@@ -48,3 +50,7 @@ print(matrix1.check())
 print(matrix2.check())
 print(matrix3.check())
 # print(matrix4.check())
+
+
+# ИТОГ: не готово к проверке — 0/12
+# КОММЕНТАРИЙ: когда допишете — удалите комментарий с меткой ИТОГ
