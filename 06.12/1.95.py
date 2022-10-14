@@ -1,5 +1,6 @@
-
+# ДОБАВИТЬ: аннотации типов параметров и возвращаемого значения
 def newmessage(message):
+    # ДОБАВИТЬ: документацию функции
     # print(type(message))
     words = message.split(' ')
     for i in range(len(words)):
@@ -17,7 +18,7 @@ def newmessage(message):
                 # print(upper)
     # print(' '.join(words))
     # print(upper)
-    
+
 # Вверху более-менее итог, к которому я смог прийти. Пробовал разбить строку на слова и уже с ними работать, 
 # но самое первое слово не поддаётся редактированию
     
