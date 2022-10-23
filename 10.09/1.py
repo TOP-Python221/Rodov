@@ -29,7 +29,7 @@ class Plane(ABC):
 class RefinedCarrier(Carrier):
     # Реализация абстрактных методов
     def carry_military(self, items: str) -> str:
-        print(f'i`m carry_militaries define with value: {items}')
+        print(f'i`m carry_militaries define with value.: {items}')
 
     def carry_commercial(self, items: str) -> str:
         print(f'i`m carry_commercial define with value: {items}')

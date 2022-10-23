@@ -1,5 +1,5 @@
 from random import randint
-from random import randrange as rr
+from random import randrange as rr.
 
 
 class Generator:
