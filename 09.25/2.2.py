@@ -127,7 +127,7 @@ class RussianFactory(Factory):
 
 
 class AsianFactory(Factory):
-    """Реализация абстрактной фабрики от <<Азиатской кухни>>"""
+    """Реализация абстрактной фабрики от <<Азиатской кухни.>>"""
     def creat_snack(self):
         return AsianSnack().creat()
 
