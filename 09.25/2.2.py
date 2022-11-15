@@ -1,17 +1,16 @@
-
 from abc import ABC, abstractmethod
 
 
 class Dishes(ABC):
     """Базовый класс <<Блюда>>"""
-    def __init__(self, name: str, description: str, cost: float, *ingredients: 'str'):
+    def __init__(self, name: str, description: str, cost: float, *ingredients: str):
         self.cost = cost
         self.ingredients = ingredients
         self.description = description
         self.name = name
 
     @abstractmethod
-    def creat(self): pass
+    def create(self): pass
 
     @abstractmethod
     def describe(self): pass
@@ -19,7 +18,7 @@ class Dishes(ABC):
 
 class Snack(Dishes):
     """Конкретный класс <<Закуска>>"""
-    def creat(self):
+    def create(self):
         return f'We cooked {self.name}. It has {self.ingredients} ingredients and costs {self.cost}'
 
     def describe(self):
@@ -28,7 +27,7 @@ class Snack(Dishes):
 
 class MainDish(Dishes):
     """Конкретный класс <<Главное блюдо>>"""
-    def creat(self):
+    def create(self):
         return f'We cooked {self.name}. It has {self.ingredients} ingredients and costs {self.cost}'
 
     def describe(self):
@@ -37,7 +36,7 @@ class MainDish(Dishes):
 
 class SecondDish(Dishes):
     """Конкретный класс <<Второе блюдо>>"""
-    def creat(self):
+    def create(self):
         return f'We cooked {self.name}. It has {self.ingredients} ingredients and costs {self.cost}'
 
     def describe(self):
@@ -47,12 +46,11 @@ class SecondDish(Dishes):
 class RussianSnack(Snack):
     """Расширенный класс <<Закуска>> из русской кухни"""
     def __init__(self):
-        super().__init__('Any Russian Snack', 'some describe of ', 130.00, '1ing', '3ing', '2ing', )  # 1ing and etc -
-        # количество каких-то ингредиентов для какого-то блюда
+        # 1ing and etc — количество каких-то ингредиентов для какого-то блюда
+        super().__init__('Any Russian Snack', 'some describe of ', 130.00, '1ing', '3ing', '2ing')
 
     def describe(self):
         return f'{self.description}Russian Snack'
-        
 
 
 class RussianMain(MainDish):
@@ -99,7 +97,7 @@ class AsianSecond(SecondDish):
 
 class Factory(ABC):
     @abstractmethod
-    def creat_snack(self):
+    def create_snack(self):
         pass
 
     @abstractmethod
@@ -113,8 +111,8 @@ class Factory(ABC):
 
 class RussianFactory(Factory):
     """Реализация абстрактной фабрики от <<Русской кухни>>"""
-    def creat_snack(self):
-        return RussianSnack().creat()
+    def create_snack(self):
+        return RussianSnack().create()
 
     def describe_snack(self):
         return RussianSnack().describe()
@@ -128,8 +126,8 @@ class RussianFactory(Factory):
 
 class AsianFactory(Factory):
     """Реализация абстрактной фабрики от <<Азиатской кухни.>>"""
-    def creat_snack(self):
-        return AsianSnack().creat()
+    def create_snack(self):
+        return AsianSnack().create()
 
     def describe_snack(self):
         return AsianSnack().describe()
@@ -144,16 +142,16 @@ class AsianFactory(Factory):
 rf = RussianFactory()
 af = AsianFactory()
 
-print(rf.creat_snack())
+print(rf.create_snack())
 print(rf.describe_snack())
 print()
-print(af.creat_snack())
+print(af.create_snack())
 print(af.describe_snack())
 
 
 
 
-#===============================First Try=========================================
+# =============================== First Try =========================================
 # class Dishes(ABC):
 #     def __init__(self, name: str, description: str, cost: float, *ingredients: 'str'): # метод потребления
 #         # реализовывать не стал :^
