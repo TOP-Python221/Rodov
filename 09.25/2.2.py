@@ -1,6 +1,9 @@
 from abc import ABC, abstractmethod
 
 
+# ДОБАВИТЬ: всем методам, кроме встроенных, аннотации типов возвращаемых значений
+
+
 class Dishes(ABC):
     """Базовый класс <<Блюда>>"""
     def __init__(self, name: str, description: str, cost: float, *ingredients: str):
@@ -139,6 +142,8 @@ class AsianFactory(Factory):
         return AsianSecond()
 
 
+# КОММЕНТАРИЙ: судя по количеству объектов, вызывающих другие объекты, которые вызывают третьи объекты — идеями абстракции вы прониклись =)
+
 rf = RussianFactory()
 af = AsianFactory()
 
@@ -148,70 +153,10 @@ print()
 print(af.create_snack())
 print(af.describe_snack())
 
+# ДОБАВИТЬ: напомню, что по условию задачи вам необходимо было получить от пользователя строку с названием кухни — и сгенерировать набор блюд соответствующей кухни — это можно сделать на тривиальных if...elif, что впрочем не лучший вариант, можно вручную составить словарь с нужными фабриками, можно проинспектировать код модуля, найдя подходящие объекты классов (фабрик) и поместив их в тот же словарь или перечислитель, можно вычислить eval() строку сразу в нужный объект класса... как видите способов много — как и всегда =)
 
 
+# ИТОГ: доработать — 4/6
 
-# =============================== First Try =========================================
-# class Dishes(ABC):
-#     def __init__(self, name: str, description: str, cost: float, *ingredients: 'str'): # метод потребления
-#         # реализовывать не стал :^
-#         self.cost = cost
-#         self.ingredients = ingredients
-#         self.description = description
-#         self.name = name
-#
-#     @abstractmethod
-#     def creat(self): pass
-#
-#     @abstractmethod
-#     def describ(self): pass
-#
-#
-#
-#
-#
-# class RussiaDishes(Dishes):
-#     def __init__(self):
-#         super().__init__('Jelly',
-#                          'very strange russian dish :/',
-#                          600.0,
-#                          'meat', 'garlic', 'carrot', 'onion', 'greens', 'salt', 'pepper', 'water',
-#                          )
-#
-#
-#     def creat(self):
-#         return f'We cooked a {self.name} containing from {self.ingredients} and costs {self.cost}'
-#
-#     def describ(self):
-#         return f'{self.name} {self.description}'
-#
-#
-# class AsiaDishes(Dishes):
-#     def __init__(self):
-#         super().__init__('Some asian food',
-#                          'so tasty food :)',
-#                          1250.0,
-#                          '1 ing', '2 ing', '3 ing', '4 ing', '5 ing', '6 ing',)
-#
-#     def creat(self):
-#         return f'We cooked a {self.name} containing from {self.ingredients} and costs {self.cost}'
-#
-#     def describ(self):
-#         return f'{self.name} {self.description}'
-#
-#
-# class Factory(ABC):
-#     @abstractmethod
-#     def get_dishes(self) -> Dishes: pass
-#
-#
-#
-#
-#
-# RD = RussiaDishes()
-# AD = AsiaDishes()
-# RD.creat()
-# print(RD.creat())
-# print(AD.creat())
-# print(RD.describ())
-# print(AD.describ())
+
+# СДЕЛАТЬ: первую задачу на шаблон Фабрика
