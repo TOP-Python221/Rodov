@@ -1,5 +1,4 @@
 
-
 class CLIView:
     @staticmethod
     def get_email():
@@ -12,9 +11,3 @@ class CLIView:
     @staticmethod
     def correct_email():
         return ("Ваш e-mail адресс успешно сохранён.")
-
-# print(CLIView.get_email())
-
-
-
-
