@@ -1,5 +1,6 @@
 """Модель MVC."""
-
+from __future__ import annotations
+import controller
 from pathlib import Path
 import re
 
@@ -30,3 +31,7 @@ class Email:
         with open(self.file_path, 'a', encoding='utf-8') as fileout:
             fileout.write(self.email + '\n')
 
+# SE1 = Email('romanrodov@yandex.ru')
+# for user in controller.users:
+#     SE1 = Email(user)
+#     SE1.save()
