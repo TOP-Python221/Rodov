@@ -1,17 +1,19 @@
-
 from abc import ABC, abstractmethod
+
+
+# ДОБАВИТЬ: всем методам, кроме встроенных, аннотации типов возвращаемых значений
 
 
 class Dishes(ABC):
     """Базовый класс <<Блюда>>"""
-    def __init__(self, name: str, description: str, cost: float, *ingredients: 'str'):
+    def __init__(self, name: str, description: str, cost: float, *ingredients: str):
         self.cost = cost
         self.ingredients = ingredients
         self.description = description
         self.name = name
 
     @abstractmethod
-    def creat(self): pass
+    def create(self): pass
 
     @abstractmethod
     def describe(self): pass
@@ -19,7 +21,7 @@ class Dishes(ABC):
 
 class Snack(Dishes):
     """Конкретный класс <<Закуска>>"""
-    def creat(self):
+    def create(self):
         return f'We cooked {self.name}. It has {self.ingredients} ingredients and costs {self.cost}'
 
     def describe(self):
@@ -28,7 +30,7 @@ class Snack(Dishes):
 
 class MainDish(Dishes):
     """Конкретный класс <<Главное блюдо>>"""
-    def creat(self):
+    def create(self):
         return f'We cooked {self.name}. It has {self.ingredients} ingredients and costs {self.cost}'
 
     def describe(self):
@@ -37,7 +39,7 @@ class MainDish(Dishes):
 
 class SecondDish(Dishes):
     """Конкретный класс <<Второе блюдо>>"""
-    def creat(self):
+    def create(self):
         return f'We cooked {self.name}. It has {self.ingredients} ingredients and costs {self.cost}'
 
     def describe(self):
@@ -47,12 +49,11 @@ class SecondDish(Dishes):
 class RussianSnack(Snack):
     """Расширенный класс <<Закуска>> из русской кухни"""
     def __init__(self):
-        super().__init__('Any Russian Snack', 'some describe of ', 130.00, '1ing', '3ing', '2ing', )  # 1ing and etc -
-        # количество каких-то ингредиентов для какого-то блюда
+        # 1ing and etc — количество каких-то ингредиентов для какого-то блюда
+        super().__init__('Any Russian Snack', 'some describe of ', 130.00, '1ing', '3ing', '2ing')
 
     def describe(self):
         return f'{self.description}Russian Snack'
-        
 
 
 class RussianMain(MainDish):
@@ -99,7 +100,7 @@ class AsianSecond(SecondDish):
 
 class Factory(ABC):
     @abstractmethod
-    def creat_snack(self):
+    def create_snack(self):
         pass
 
     @abstractmethod
@@ -113,8 +114,8 @@ class Factory(ABC):
 
 class RussianFactory(Factory):
     """Реализация абстрактной фабрики от <<Русской кухни>>"""
-    def creat_snack(self):
-        return RussianSnack().creat()
+    def create_snack(self):
+        return RussianSnack().create()
 
     def describe_snack(self):
         return RussianSnack().describe()
@@ -128,8 +129,8 @@ class RussianFactory(Factory):
 
 class AsianFactory(Factory):
     """Реализация абстрактной фабрики от <<Азиатской кухни.>>"""
-    def creat_snack(self):
-        return AsianSnack().creat()
+    def create_snack(self):
+        return AsianSnack().create()
 
     def describe_snack(self):
         return AsianSnack().describe()
@@ -141,79 +142,21 @@ class AsianFactory(Factory):
         return AsianSecond()
 
 
+# КОММЕНТАРИЙ: судя по количеству объектов, вызывающих другие объекты, которые вызывают третьи объекты — идеями абстракции вы прониклись =)
+
 rf = RussianFactory()
 af = AsianFactory()
 
-print(rf.creat_snack())
+print(rf.create_snack())
 print(rf.describe_snack())
 print()
-print(af.creat_snack())
+print(af.create_snack())
 print(af.describe_snack())
 
+# ДОБАВИТЬ: напомню, что по условию задачи вам необходимо было получить от пользователя строку с названием кухни — и сгенерировать набор блюд соответствующей кухни — это можно сделать на тривиальных if...elif, что впрочем не лучший вариант, можно вручную составить словарь с нужными фабриками, можно проинспектировать код модуля, найдя подходящие объекты классов (фабрик) и поместив их в тот же словарь или перечислитель, можно вычислить eval() строку сразу в нужный объект класса... как видите способов много — как и всегда =)
 
 
+# ИТОГ: доработать — 4/6
 
-#===============================First Try=========================================
-# class Dishes(ABC):
-#     def __init__(self, name: str, description: str, cost: float, *ingredients: 'str'): # метод потребления
-#         # реализовывать не стал :^
-#         self.cost = cost
-#         self.ingredients = ingredients
-#         self.description = description
-#         self.name = name
-#
-#     @abstractmethod
-#     def creat(self): pass
-#
-#     @abstractmethod
-#     def describ(self): pass
-#
-#
-#
-#
-#
-# class RussiaDishes(Dishes):
-#     def __init__(self):
-#         super().__init__('Jelly',
-#                          'very strange russian dish :/',
-#                          600.0,
-#                          'meat', 'garlic', 'carrot', 'onion', 'greens', 'salt', 'pepper', 'water',
-#                          )
-#
-#
-#     def creat(self):
-#         return f'We cooked a {self.name} containing from {self.ingredients} and costs {self.cost}'
-#
-#     def describ(self):
-#         return f'{self.name} {self.description}'
-#
-#
-# class AsiaDishes(Dishes):
-#     def __init__(self):
-#         super().__init__('Some asian food',
-#                          'so tasty food :)',
-#                          1250.0,
-#                          '1 ing', '2 ing', '3 ing', '4 ing', '5 ing', '6 ing',)
-#
-#     def creat(self):
-#         return f'We cooked a {self.name} containing from {self.ingredients} and costs {self.cost}'
-#
-#     def describ(self):
-#         return f'{self.name} {self.description}'
-#
-#
-# class Factory(ABC):
-#     @abstractmethod
-#     def get_dishes(self) -> Dishes: pass
-#
-#
-#
-#
-#
-# RD = RussiaDishes()
-# AD = AsiaDishes()
-# RD.creat()
-# print(RD.creat())
-# print(AD.creat())
-# print(RD.describ())
-# print(AD.describ())
+
+# СДЕЛАТЬ: первую задачу на шаблон Фабрика
