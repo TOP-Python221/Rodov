@@ -71,6 +71,8 @@ class PersistenceManager:
                 print('UPDATE запрос успешно выполненен.')
 
     def delete(self, delete_query):
+        """Удаляет данные в таблице. Данный запрос должен начинаться с ключевого слова `DELETE/delete`"""
+
         with self.connection.cursor() as cursor:
             if delete_query.split(' ')[0] not in CHECK_LIST:
                 raise ValueError('Данный запрос должен начинаться с ключевого слова `DELETE/delete`. Проверьте '
